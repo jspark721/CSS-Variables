@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Scoped CSS Variables and JavaScript</title>
+</head>
+    
+<body>
+    <h2>Update <span class="highlight">CSS</span> Variables <br>with <span class="highlight">JavaScript</span></h2>
+
+    <div class="controls">
+    <label for="spacing">Spacing:</label>
+    <input id="spacing" type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+    <label for="blur">Blur:</label>
+    <input id="blur" type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+    <label for="base">Base Color</label>
+    <input id="base" type="color" name="base" value="#ACB2CB">
+    </div>
+
+    <img src="https://source.unsplash.com/o4ktwpTEQso/800x600">
+
+    <style>
+
+        :root {
+            --base: #ACB2CB;
+            --spacing: 10px;
+            --blur: 10px;
+        }
+        
+        img {
+            padding: var(--spacing);
+            background: var(--base);
+            filter: blur(var(--blur));
+        }
+        
+        .highlight{
+            color: var(--base);
+        }
+
+        body {
+            background: #51567A;
+            color: white;
+            font-family: 'helvetica neue', sans-serif;
+            font-weight: 100;
+            letter-spacing: -4px;
+            font-size: 50px;
+            text-align:center;
+        }
+
+        .controls {
+            margin-bottom: 50px;
+            letter-spacing: -1px;
+        }
+        
+
+        input {
+            width:100px;
+        }
+    </style>
+
+    <script>
+        const inputs = document.querySelectorAll('.controls input');
+        
+        function handleUpdate() {
+            const suffix = this.dataset.sizing || ''; 
+            document.documentElement.style.setProperty(`--${this.name}`, this.value + suffix);
+        }
+        
+        inputs.forEach(input => input.addEventListener('change', handleUpdate));
+        inputs.forEach(input => input.addEventListener('mousemove', handleUpdate));
+    </script>
+
+    </body>
+</html>
